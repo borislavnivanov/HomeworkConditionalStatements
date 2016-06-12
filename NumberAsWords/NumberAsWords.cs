@@ -25,11 +25,13 @@ namespace NumbersAsWords
 
     class NumberAsWords
     {
-        static byte number = 0;
+        static int number = 0;
         static string[] numsToText = { "zero", "one", "two", "tree", "four", "five", "six", "seven", "eight", "nine" };
         static string[] teensToText = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         static string[] tensToText = { "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety" };
         static string userInput;
+        static string raw;
+        static string print;
 
         static void Main()
         {
@@ -38,17 +40,18 @@ namespace NumbersAsWords
 
             try
             {
-                number = byte.Parse(userInput);
+                number = int.Parse(userInput);
             }
             catch
             {
-                //TODO: remove the line from showing 
                 Console.WriteLine("Pleae enter a valid number between 0 and 999.");
             }
 
             if (userInput.Length == 1)
             {
-                Console.WriteLine(numsToText[number]);
+                raw = numsToText[number];
+                toUpper();
+                Console.WriteLine(print);
             }
             else if (userInput.Length == 2)
             {
@@ -63,25 +66,31 @@ namespace NumbersAsWords
         {
             char n = userInput[0];
             string p = char.ToString(n);
-            byte firstNum = byte.Parse(p);
+            int firstNum = int.Parse(p);
 
             char y = userInput[1];
             string x = char.ToString(y);
-            byte secondNum = byte.Parse(x);
+            int secondNum = int.Parse(x);
 
             if (firstNum == 1)
             {
-                Console.WriteLine(teensToText[secondNum]);
+                raw = teensToText[secondNum];
+                toUpper();
+                Console.WriteLine(print);
             }
             else
             {
                 if (secondNum == 0)
                 {
-                    Console.WriteLine(tensToText[firstNum - 2]);
+                    raw = tensToText[firstNum - 2];
+                    toUpper();
+                    Console.WriteLine(print);
                 }
                 else
                 {
-                    Console.WriteLine("{0} {1}", tensToText[firstNum - 2], numsToText[secondNum]);
+                    raw = tensToText[firstNum - 2];
+                    toUpper();
+                    Console.WriteLine("{0} {1}", print, numsToText[secondNum]);
                 }
             }
         }
@@ -90,42 +99,58 @@ namespace NumbersAsWords
         {
             char n = userInput[0];
             string p = char.ToString(n);
-            byte firstNum = byte.Parse(p);
+            int firstNum = int.Parse(p);
 
             char y = userInput[1];
             string x = char.ToString(y);
-            byte secondNum = byte.Parse(x);
+            int secondNum = int.Parse(x);
 
             char r = userInput[2];
             string g = char.ToString(r);
-            byte thirdNum = byte.Parse(g);
+            int thirdNum = int.Parse(g);
 
             if (secondNum == 1)
             {
-                Console.WriteLine(numsToText[firstNum] + " hundred and " + teensToText[thirdNum]);
+                raw = numsToText[firstNum];
+                toUpper();
+                Console.WriteLine(print + " hundred and " + teensToText[thirdNum]);
             }
             else if (secondNum == 0)
             {
                 if (thirdNum == 0)
                 {
-                    Console.WriteLine(numsToText[firstNum] + " hundred");
+                    raw = numsToText[firstNum];
+                    toUpper();
+                    Console.WriteLine(print + " hundred");
                 }
                 else
                 {
-                    Console.WriteLine("{0} {1}", numsToText[firstNum] + " hundred and", numsToText[thirdNum]);
+                    raw = numsToText[firstNum];
+                    toUpper();
+                    Console.WriteLine("{0} {1}", print + " hundred and", numsToText[thirdNum]);
                 }
             }
             else
             {
                 if (thirdNum == 0)
                 {
-                    Console.WriteLine(numsToText[firstNum] + " hundred and " + tensToText[secondNum - 2]);
+                    raw = numsToText[firstNum];
+                    toUpper();
+                    Console.WriteLine(print + " hundred and " + tensToText[secondNum - 2]);
                 }
                 else
                 {
-                    Console.WriteLine("{0} {1} {2}", numsToText[firstNum] + " hundred and", tensToText[secondNum - 2], numsToText[thirdNum]);
+                    raw = numsToText[firstNum];
+                    toUpper();
+                    Console.WriteLine("{0} {1} {2}", print + " hundred and", tensToText[secondNum - 2], numsToText[thirdNum]);
                 }
             }
+        }
+        static void toUpper()
+        {
+            char[] a = raw.ToCharArray();
+            a[0] = char.ToUpper(a[0]);
+            print = new string(a);
         }
     }
 }
